@@ -1,0 +1,14 @@
+#IDE ignore
+.vscode/
+
+# conf ignore
+conf/conf.json
+
+#logs ignore
+logs/
+
+#icon ignore
+icon/
+
+# build ignore
+*.exe
