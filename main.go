@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"flag"
 )
  
 type StackNode struct {
@@ -14,6 +13,12 @@ type StackNode struct {
 type LinkStack struct {
 	top *StackNode
 	Count int
+}
+
+// Pause 模拟暂停控制台操作
+func Pause() {
+	fmt.Print("按任意键继续......")
+	fmt.Scanln()
 }
  
 func (this *LinkStack) Init() {
@@ -47,12 +52,23 @@ func (this *LinkStack) LookTop() interface{} {
 	return this.top.Data
 }
  
-var str *string = flag.String("expression", "", "")
- 
 func main() {
-	flag.Parse()
-	fmt.Println(*str)
-	fmt.Println(Count(*str))
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Printf("%v", err)
+		}
+		Pause()
+	}()
+	expression := ""
+	for {
+		fmt.Println("Please input expression(Type 'quit' to leave): ")
+		fmt.Scanln(&expression)
+		if expression == "quit" {
+			break
+		}
+		fmt.Println("Expression: ", expression)
+		fmt.Println("Result: ", Count(expression))
+	}
 }
  
 func Count(data string) float64 {
